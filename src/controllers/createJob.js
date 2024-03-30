@@ -17,14 +17,17 @@ const getJob = async (req, res) => {
     const jobId = uuidv4();
 
     const insertQuery =
-      "INSERT INTO jobList (id, companyName, jobTitle, location, email, requirement, jobDetails) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO joblisting (id, companyName, jobTitle, location, emailAddress, requirement1, requirement2, requirement3, requirement4, jobDetails, submitBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       jobId, // Pass the generated ID
       companyName,
       jobTitle,
       location,
       emailAddress,
-      requirement,
+      requirement[0],
+      requirement[1],
+      requirement[2],
+      requirement[3],
       jobDetails,
       submitBy,
     ];
