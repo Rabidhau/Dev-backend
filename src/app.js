@@ -5,7 +5,7 @@ const errorMiddleware = require("./middleware/error-handler");
 
 const app = express();
 
-const jobRoute = require("./routes/createJob");
+const jobRoute = require("./routes/job");
 
 // middleware
 app.use(express.json());

@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const conn = require("../db/connection");
 
-const getJob = async (req, res) => {
+const createJob = async (req, res) => {
   const {
     companyName,
     jobTitle,
@@ -46,4 +46,4 @@ const getJob = async (req, res) => {
   }
 };
 
-module.exports = { getJob };
+module.exports = { createJob };
