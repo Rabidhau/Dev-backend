@@ -19,7 +19,7 @@ const createJob = async (req, res) => {
     const insertQuery =
       "INSERT INTO joblisting (id, companyName, jobTitle, location, emailAddress, requirement1, requirement2, requirement3, requirement4, jobDetails, submitBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
-      jobId, // Pass the generated ID
+      jobId,
       companyName,
       jobTitle,
       location,

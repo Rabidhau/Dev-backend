@@ -1,7 +1,7 @@
 const conn = require("../db/connection");
 
 const getJobById = async (req, res) => {
-  const jobId = req.params.id; // Assuming you pass jobId as a parameter in the URL
+  const jobId = req.params.id; // pass jobId as a parameter in the URL
 
   try {
     const selectQuery = "SELECT * FROM joblisting WHERE id = ?";
@@ -13,7 +13,7 @@ const getJobById = async (req, res) => {
         if (result.length === 0) {
           res.status(404).send("Job not found");
         } else {
-          const job = result[0]; // Assuming jobId is unique
+          const job = result[0];
           res.status(200).send(job);
         }
       }

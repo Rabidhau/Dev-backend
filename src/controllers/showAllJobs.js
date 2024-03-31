@@ -11,7 +11,7 @@ const getAllJobs = async (req, res) => {
         if (result.length === 0) {
           res.status(404).send("Job not found");
         } else {
-          const job = result; // Assuming jobId is unique
+          const job = result;
           res.status(200).send(job);
         }
       }
