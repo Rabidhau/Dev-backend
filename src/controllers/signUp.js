@@ -20,5 +20,5 @@ const signUp = async (req, res) => {
     }
   });
 };
-
+//exporting
 module.exports = { signUp };
