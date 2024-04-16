@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 
 const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
@@ -10,6 +11,7 @@ const authRoute = require("./routes/auth");
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 app.use("/", jobRoute);
 app.use("/", authRoute);
@@ -17,4 +19,4 @@ app.use("/", authRoute);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-app.listen(8080);
+app.listen(3000);
