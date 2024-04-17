@@ -2,7 +2,7 @@ const conn = require("../db/connection");
 const { v4: uuidv4 } = require("uuid");
 
 const signUp = async (req, res) => {
-  const { fullName, email, password, role } = req.body;
+  const { fullName, email, password, selectedOption } = req.body;
 
   // Generate userId using uuidv4
   const userId = uuidv4();
@@ -12,7 +12,7 @@ const signUp = async (req, res) => {
 
   const sql =
     "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
-  const values = [userId, email, fullName, password, role];
+  const values = [userId, email, fullName, password, selectedOption];
 
   // Log the SQL query string
   console.log("SQL query:", sql);
