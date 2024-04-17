@@ -1,10 +1,10 @@
 const conn = require("../db/connection");
 
 const logIn = async (req, res) => {
-  const { email, password,role } = req.body;
+  const { email, password } = req.body;
 
-  const sql = "SELECT * FROM Users WHERE email=? AND password=? AND role=?";
-  const values = [email, password,role];
+  const sql = "SELECT * FROM Users WHERE email=? AND password=?";
+  const values = [email, password];
 
   conn.query(sql, values, (err, result) => {
     if (err) {
