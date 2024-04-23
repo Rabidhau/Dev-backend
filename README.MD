@@ -20,5 +20,6 @@ CREATE TABLE JobListing (
     requirement3 VARCHAR(255),
     requirement4 VARCHAR(255),
     jobDetails VARCHAR(255),
-    submitBy VARCHAR(255)
+    submitBy VARCHAR(255),
+    category VARCHAR(255),
 );

@@ -10,6 +10,7 @@ const createJob = async (req, res) => {
     requirement,
     jobDetails,
     submitBy,
+    category,
   } = req.body;
 
   try {
@@ -17,7 +18,7 @@ const createJob = async (req, res) => {
     const jobId = uuidv4();
 
     const insertQuery =
-      "INSERT INTO joblisting (id, companyName, jobTitle, location, emailAddress, requirement1, requirement2, requirement3, requirement4, jobDetails, submitBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO joblisting (id, companyName, jobTitle, location, emailAddress, requirement1, requirement2, requirement3, requirement4, jobDetails, submitBy, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       jobId,
       companyName,
@@ -30,6 +31,7 @@ const createJob = async (req, res) => {
       requirement[3],
       jobDetails,
       submitBy,
+      category,
     ];
 
     conn.query(insertQuery, values, (err, result) => {

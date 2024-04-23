@@ -1,10 +1,14 @@
 const conn = require("../db/connection");
+const { md5Hash } = require("./signUp");
 
 const logIn = async (req, res) => {
   const { email, password } = req.body;
 
+  const hashedPassword = md5Hash(password);
+
   const sql = "SELECT * FROM Users WHERE email=? AND password=?";
-  const values = [email, password];
+
+  const values = [email, hashedPassword];
 
   conn.query(sql, values, (err, result) => {
     if (err) {
