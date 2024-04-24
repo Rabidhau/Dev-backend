@@ -5,16 +5,9 @@ const jwt = require("jsonwebtoken");
 
 const crypto = require("crypto");
 
-const hashedPassword = md5Hash(password);
-
-const sql = "SELECT * FROM Users WHERE email=? AND password=?";
-
-const values = [email, hashedPassword];
 const secretKey = crypto.randomBytes(16).toString("hex"); // Generate a random secret key
 const emailSender = "rabidhau01@gmail.com"; // Replace with your email address
 const emailPassword = "eydn qkqt yobg xkoi"; // Replace with your email password
-
-console.log(secretKey);
 
 // Function to send email with token
 const sendTokenByEmail = async (email, token) => {
@@ -44,8 +37,10 @@ const sendTokenByEmail = async (email, token) => {
 const logIn = async (req, res) => {
   const { email, password } = req.body;
 
+  const hashedPassword = md5Hash(password);
+
   const sql = "SELECT * FROM Users WHERE email=? AND password=?";
-  const values = [email, password];
+  const values = [email, hashedPassword];
 
   conn.query(sql, values, (err, result) => {
     if (err) {

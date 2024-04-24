@@ -39,7 +39,7 @@ const createJob = async (req, res) => {
         console.error("Error inserting job in db:", err);
         res.status(400).send("Error inserting job in database");
       } else {
-        res.status(200).send({ ...req.body, id: jobId });
+        res.status(200).send("Created job successfully");
       }
     });
   } catch (error) {

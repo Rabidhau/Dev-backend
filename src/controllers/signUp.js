@@ -17,15 +17,9 @@ const signUp = async (req, res) => {
   // Generate userId using uuidv4
   const userId = uuidv4();
 
-  // Log the length of userId
-  console.log("Generated userId length:", userId.length);
-
   const sql =
     "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
   const values = [userId, email, fullName, hashedPassword, selectedOption];
-
-  // Log the SQL query string
-  console.log("SQL query:", sql);
 
   conn.query(sql, values, (err, result) => {
     if (err) {
