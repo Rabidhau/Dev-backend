@@ -9,7 +9,7 @@ const verifyToken = (req, res) => {
         const decoded = jwt.verify(token, secretKey);
 
         // If the token is verified successfully, you can access the payload
-        const userId = decoded.userId; // Assuming 'userId' is included in the token payload
+        const userId = decoded.userId; // 'userId' is included in the token payload
 
         res.status(200).send(`Token verified successfully. User ID: ${userId}`);
     } catch (error) {
