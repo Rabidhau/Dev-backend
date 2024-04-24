@@ -6,7 +6,7 @@ nodemon app
 
 
 <!-- DATABASES -->
-Create a database name called jobjenie
+Create a database name called jobgenie
 
 <!-- Run this command to create -->
 CREATE TABLE JobListing (
@@ -20,5 +20,6 @@ CREATE TABLE JobListing (
     requirement3 VARCHAR(255),
     requirement4 VARCHAR(255),
     jobDetails VARCHAR(255),
-    submitBy VARCHAR(255)
+    submitBy VARCHAR(255),
+    category VARCHAR(255)
 );

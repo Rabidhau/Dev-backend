@@ -1,21 +1,25 @@
 const conn = require("../db/connection");
 const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
+
+// Function to hash a password using MD5
+const md5Hash = (password) => {
+  const hash = crypto.createHash("md5");
+  hash.update(password);
+  return hash.digest("hex");
+};
 
 const signUp = async (req, res) => {
   const { fullName, email, password, selectedOption } = req.body;
 
+  const hashedPassword = md5Hash(password);
+
   // Generate userId using uuidv4
   const userId = uuidv4();
 
-  // Log the length of userId
-  console.log("Generated userId length:", userId.length);
-
   const sql =
     "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
-  const values = [userId, email, fullName, password, selectedOption];
-
-  // Log the SQL query string
-  console.log("SQL query:", sql);
+  const values = [userId, email, fullName, hashedPassword, selectedOption];
 
   conn.query(sql, values, (err, result) => {
     if (err) {
@@ -28,4 +32,4 @@ const signUp = async (req, res) => {
   });
 };
 
-module.exports = { signUp };
+module.exports = { signUp, md5Hash };
