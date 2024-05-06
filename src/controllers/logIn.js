@@ -1,16 +1,18 @@
 const conn = require("../db/connection");
 const { md5Hash } = require("./signUp");
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
 
-const crypto = require("crypto");
 
-const secretKey = crypto.randomBytes(16).toString("hex"); // Generate a random secret key
 const emailSender = "rabidhau01@gmail.com"; // Replace with your email address
 const emailPassword = "eydn qkqt yobg xkoi"; // Replace with your email password
 
-// Function to send email with token
-const sendTokenByEmail = async (email, token) => {
+// Function to generate a random 6-digit code
+const generateRandomCode = () => {
+  return Math.floor(100000 + Math.random() * 900000); // Generate a random number between 100000 and 999999
+};
+
+// Function to send email with the code
+const sendCodeByEmail = async (email, code) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail", // Replace with your email service provider (e.g., Gmail)
     auth: {
@@ -22,8 +24,8 @@ const sendTokenByEmail = async (email, token) => {
   const mailOptions = {
     from: emailSender,
     to: email,
-    subject: "Login Token",
-    text: `Your login token is: ${token}`,
+    subject: "Login Code",
+    text: `Your login code is: ${code}`,
   };
 
   try {
@@ -42,28 +44,22 @@ const logIn = async (req, res) => {
   const sql = "SELECT * FROM Users WHERE email=? AND password=?";
   const values = [email, hashedPassword];
 
-  conn.query(sql, values, (err, result) => {
+  conn.query(sql, values, async (err, result) => {
     if (err) {
       console.error("Error logging in:", err);
       res.status(500).send("Error logging in");
     } else if (result.length === 0) {
       res.status(401).send("Invalid credentials");
     } else {
-      // Generate token using secret key
-      const user = result[0]; // Assuming only one user is returned
-      const token = jwt.sign({ userId: user.id }, secretKey, {
-        expiresIn: "1h",
-      });
+      // Generate and send code
+      const generatedCode = generateRandomCode();
 
-      // Send token to user's email
-      sendTokenByEmail(email, token);
+      // Send code to user's email
+      await sendCodeByEmail(email, generatedCode);
 
-      // Respond with a message indicating that the token has been sent to the user's email
-      res
-        .status(200)
-        .send("Token sent to your email. Please check your inbox.");
+      res.status(200).send("Code sent to your email. Please check your inbox.");
     }
   });
 };
 
-module.exports = { logIn, secretKey };
+module.exports = { logIn ,generateRandomCode};

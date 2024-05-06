@@ -4,7 +4,6 @@ const con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-
 });
 
 con.connect((err) => {
@@ -30,19 +29,41 @@ con.connect((err) => {
       }
       console.log('Using database "jobgenie"');
 
-      // Create the "users" table if it doesn't exist
+      // Create the "Users" table if it doesn't exist
       con.query(`CREATE TABLE IF NOT EXISTS Users (
-        userId VARCHAR(100) NOT NULL,
+        userId VARCHAR(100) NOT NULL PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        role VARCHAR(255)  NOT NULL
+        role VARCHAR(255) NOT NULL
       )`, (err) => {
         if (err) {
-          console.error('Error creating table:', err);
+          console.error('Error creating Users table:', err);
           throw err;
         }
-        console.log('Table "users" created or exists');
+        console.log('Table "Users" created or exists');
+      });
+
+      // Create the "joblisting" table if it doesn't exist
+      con.query(`CREATE TABLE IF NOT EXISTS joblisting (
+        id VARCHAR(255) NOT NULL,
+        companyName VARCHAR(255) NOT NULL,
+        jobTitle VARCHAR(255) NOT NULL,
+        location VARCHAR(255) NOT NULL,
+        emailAddress VARCHAR(255) NOT NULL,
+        requirement1 VARCHAR(255) NOT NULL,
+        requirement2 VARCHAR(255) NOT NULL,
+        requirement3 VARCHAR(255) NOT NULL,
+        requirement4 VARCHAR(255) NOT NULL,
+        jobDetails TEXT NOT NULL,
+        submitBy DATE NOT NULL,
+        category VARCHAR(255) NOT NULL
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating joblisting table:', err);
+          throw err;
+        }
+        console.log('Table "joblisting" created or exists');
       });
     });
   });

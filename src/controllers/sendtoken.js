@@ -1,22 +1,20 @@
-const { secretKey } = require("./logIn");
-const jwt = require('jsonwebtoken');
+const { generateRandomCode } = require("./logIn");
+
 
 const verifyToken = (req, res) => {
     const { token } = req.body;
 
     try {
-        // Verify the token using the secret key
-        const decoded = jwt.verify(token, secretKey);
-
-        // If the token is verified successfully, you can access the payload
-        const userId = decoded.userId; // 'userId' is included in the token payload
-
-        res.status(200).send(`Token verified successfully. User ID: ${userId}`);
-    } catch (error) {
-        // If token verification fails (e.g., invalid or expired token)
-        console.error('Error verifying token:', error);
-        res.status(401).send("Invalid token");
-    }
+        // Call the function to verify the code
+        generateRandomCode(token);
+        
+        // If the code is verified successfully, you can redirect or send a success response
+        res.status(200).send("Code verified successfully.");
+      } catch (error) {
+        // If there's an error during code verification, you can handle it here
+        console.error('Error verifying code:', error);
+        res.status(401).send("Invalid code");
+      }
 };
 
 module.exports = { verifyToken };
