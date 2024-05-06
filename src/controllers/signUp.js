@@ -13,13 +13,6 @@ const signUp = async (req, res) => {
   const { fullName, email, password, selectedOption } = req.body;
 
   try {
-    // Check if email already exists
-    const checkEmailQuery = "SELECT COUNT(*) AS count FROM Users WHERE email = ?";
-    const emailExists = await conn.query(checkEmailQuery, [email]);
-
-    if (emailExists[0].count > 0) {
-      return res.status(400).send("Email already exists");
-    }
 
     // Validate password using regex
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
@@ -33,7 +26,7 @@ const signUp = async (req, res) => {
     // Hash the password
     const hashedPassword = md5Hash(password);
 
-    const sql = "INSERT INTO Users (userId, email, fullName, password, role) VALUES (?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
     const values = [userId, email, fullName, hashedPassword, selectedOption];
 
     await conn.query(sql, values);
