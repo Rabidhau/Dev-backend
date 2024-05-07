@@ -2,7 +2,6 @@ const conn = require("../db/connection");
 const { md5Hash } = require("./signUp");
 const nodemailer = require("nodemailer");
 
-
 const emailSender = "rabidhau01@gmail.com"; // Replace with your email address
 const emailPassword = "eydn qkqt yobg xkoi"; // Replace with your email password
 
@@ -41,7 +40,7 @@ const logIn = async (req, res) => {
 
   const hashedPassword = md5Hash(password);
 
-  const sql = "SELECT * FROM Users WHERE email=? AND password=?";
+  const sql = "SELECT userId, email, username, role FROM Users WHERE email=? AND password=?";
   const values = [email, hashedPassword];
 
   conn.query(sql, values, async (err, result) => {
@@ -57,9 +56,10 @@ const logIn = async (req, res) => {
       // Send code to user's email
       await sendCodeByEmail(email, generatedCode);
 
-      res.status(200).send("Code sent to your email. Please check your inbox.");
+      const userData = result[0]; // Get the user data from the query result
+      res.status(200).json({ ...userData, code: generatedCode }); // Return user data along with the generated code
     }
   });
 };
 
-module.exports = { logIn ,generateRandomCode};
+module.exports = { logIn, generateRandomCode };

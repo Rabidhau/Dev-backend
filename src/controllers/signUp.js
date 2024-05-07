@@ -13,7 +13,6 @@ const signUp = async (req, res) => {
   const { fullName, email, password, selectedOption } = req.body;
 
   try {
-
     // Validate password using regex
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -31,6 +30,14 @@ const signUp = async (req, res) => {
 
     await conn.query(sql, values);
     console.log("Signup successful");
+
+    // If role is recruiter, insert into recruiter_info table
+    if (selectedOption === 'Recruiter') {
+      const recruiterSql = "INSERT INTO recruiter_info (id, name, email) VALUES (?, ?, ?)";
+      const recruiterValues = [userId, fullName, email];
+      await conn.query(recruiterSql, recruiterValues);
+    }
+
     return res.status(200).send("Signup successful");
   } catch (error) {
     console.error("Error signing up:", error);
