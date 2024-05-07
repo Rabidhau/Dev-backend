@@ -65,6 +65,22 @@ con.connect((err) => {
         }
         console.log('Table "joblisting" created or exists');
       });
+
+      // Create the "recruiter_info" table if it doesn't exist
+      con.query(`CREATE TABLE IF NOT EXISTS recruiter_info (
+        id VARCHAR(255) NOT NULL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        company_name VARCHAR(255) ,
+        email VARCHAR(255),
+        phone_number VARCHAR(20) ,
+        location VARCHAR(255)
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating recruiter_info table:', err);
+          throw err;
+        }
+        console.log('Table "recruiter_info" created or exists');
+      });
     });
   });
 });

@@ -4,10 +4,13 @@ const { logIn } = require("../controllers/logIn");
 const { signUp } = require("../controllers/signUp");
 const { verifyToken } = require("../controllers/sendtoken"); // Import the verifyToken function
 const { verify } = require("../controllers/verify");
+const { info } = require("../controllers/getinfo");
+const { updateInfo } = require("../controllers/updateinfo");
 
 router.route("/sign-up").post(signUp);
 router.route("/login").post(logIn);
 router.route("/authentication").post(verifyToken); // Add the new route
 router.route("/verify-token").post(verify); 
-
+router.route("/user-profile/:userId").get(info); 
+router.route("/updateinfo/:userId").post(updateInfo); 
 module.exports = router;
