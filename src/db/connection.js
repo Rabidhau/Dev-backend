@@ -81,6 +81,25 @@ con.connect((err) => {
         }
         console.log('Table "recruiter_info" created or exists');
       });
+
+      con.query(`CREATE TABLE IF NOT EXISTS candidate_info (
+        id VARCHAR(255) NOT NULL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255),
+        phone_number VARCHAR(20) ,
+        location VARCHAR(255),
+        qualification1 VARCHAR(255),
+        qualification2 VARCHAR(255),
+        qualification3 VARCHAR(255),
+        qualification4 VARCHAR(255),
+        status BOOLEAN
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating candidate_info table:', err);
+          throw err;
+        }
+        console.log('Table "candidate_info" created or exists');
+      });
     });
   });
 });

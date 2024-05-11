@@ -1,10 +1,10 @@
 const conn = require("../db/connection");
 
-const info = async (req, res) => {
-    const companyName = req.params.company_name;
+const candy = async (req, res) => {
+    const userId = req.params.userId;
     try {
-        const selectQuery = "SELECT * FROM joblisting WHERE companyName = ?";
-        conn.query(selectQuery, [companyName], (err, result) => {
+        const selectQuery = "SELECT * FROM candidate_info WHERE id = ?";
+        conn.query(selectQuery, [userId], (err, result) => {
           if (err) {
             console.error("Error fetching info from db:", err);
             res.status(400).send("Error fetching info from database");
@@ -12,8 +12,8 @@ const info = async (req, res) => {
             if (result.length === 0) {
               res.status(404).send("No data found");
             } else {
-              
-              res.status(200).send(result);
+              const job = result[0];
+              res.status(200).send(job);
             }
           }
         });
@@ -23,4 +23,4 @@ const info = async (req, res) => {
       }
     };
 
-module.exports = { info };
+module.exports = { candy };

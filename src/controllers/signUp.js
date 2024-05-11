@@ -25,19 +25,24 @@ const signUp = async (req, res) => {
     // Hash the password
     const hashedPassword = md5Hash(password);
 
-    const sql = "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
-    const values = [userId, email, fullName, hashedPassword, selectedOption];
+    const sqlUser = "INSERT INTO Users (userId, email, username, password, role) VALUES (?, ?, ?, ?, ?)";
+    const valuesUser = [userId, email, fullName, hashedPassword, selectedOption];
 
-    await conn.query(sql, values);
-    console.log("Signup successful");
+    // Execute query to insert user into Users table
+    await conn.query(sqlUser, valuesUser);
 
-    // If role is recruiter, insert into recruiter_info table
-    if (selectedOption === 'Recruiter') {
-      const recruiterSql = "INSERT INTO recruiter_info (id, name, email) VALUES (?, ?, ?)";
-      const recruiterValues = [userId, fullName, email];
-      await conn.query(recruiterSql, recruiterValues);
+    // If the role is recruiter, insert user info into recruiter_info table
+    if (selectedOption === "Recruiter") {
+      const sqlRecruiter = "INSERT INTO recruiter_info (id, name, email) VALUES (?, ?, ?)";
+      const valuesRecruiter = [userId, fullName, email];
+      await conn.query(sqlRecruiter, valuesRecruiter);
     }
-
+    if (selectedOption === "Candidate") {
+      const sqlCandidate = "INSERT INTO candidate_info (id, name, email) VALUES (?, ?, ?)";
+      const valuesCandidate = [userId, fullName, email];
+      await conn.query(sqlCandidate, valuesCandidate);
+    }
+    console.log("Signup successful");
     return res.status(200).send("Signup successful");
   } catch (error) {
     console.error("Error signing up:", error);
