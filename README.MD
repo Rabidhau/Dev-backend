@@ -23,3 +23,10 @@ CREATE TABLE JobListing (
     submitBy VARCHAR(255),
     category VARCHAR(255)
 );
+
+<!-- applied_job -->
+
+CREATE TABLE applied_job (
+    jobID VARCHAR(255) PRIMARY KEY,
+    candidateID TEXT
+);
