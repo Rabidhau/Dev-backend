@@ -100,6 +100,27 @@ con.connect((err) => {
         }
         console.log('Table "candidate_info" created or exists');
       });
+
+      con.query(`CREATE TABLE IF NOT EXISTS applied_job (
+        jobID VARCHAR(255) PRIMARY KEY,
+        candidateID TEXT
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating applied_job table:', err);
+          throw err;
+        }
+        console.log('Table "applied_job" created or exists');
+      });
+      con.query(`CREATE TABLE IF NOT EXISTS candidate_jobs (
+        candidateId VARCHAR(255) primary key,
+        job_info TEXT
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating candidate_job table:', err);
+          throw err;
+        }
+        console.log('Table "candidate_job" created or exists');
+      });
     });
   });
 });
